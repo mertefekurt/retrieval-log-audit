@@ -1,33 +1,33 @@
 # Retrieval Log Audit
 
-Find retrieval logs with empty hits, weak scores, and missing source metadata. This repo keeps the work close to the terminal: clear input, predictable output, and no service to babysit.
+![Retrieval Log Audit cover](assets/readme-cover.svg)
 
-## Project card
+## What it protects
 
-<img src="assets/readme-cover.svg" alt="Retrieval Log Audit cover" width="100%" />
+This repository turns a tiny plain text into reviewable signals for retrieval logging.
 
 | Detail | Value |
 | --- | --- |
-| Area | developer tools |
-| Command | `retrieval-log-audit` |
-| Example | `examples/sample.txt` |
+| Area | developer tool |
+| Entry | `retrieval-log-audit` |
+| Input | plain text |
+| Output | terminal findings, optional JSON |
 
-## What would make me stop a review
+## Inspection line
 
-| Stopper | Level | Why it matters |
-| --- | --- | --- |
-| `empty-retrieval` | high | retrieval returned no documents |
-| `low-top-score` | medium | top retrieval score appears weak |
-| `missing-source` | low | source metadata is missing |
+![Signal map](assets/readme-diagram.svg)
 
-## Run from a fresh clone
+| Signal | Level | What it flags | Fix direction |
+| --- | --- | --- | --- |
+| `empty-retrieval` | high | retrieval returned no documents | Add coverage or route query to fallback handling. |
+| `low-top-score` | medium | top retrieval score appears weak | Review chunking, query rewriting, or index freshness. |
+| `missing-source` | low | source metadata is missing | Persist source URI or document identifier with each hit. |
+
+## One-pass run
 
 ```bash
 git clone https://github.com/mertefekurt/retrieval-log-audit.git
 cd retrieval-log-audit
-python -m venv .venv
-source .venv/bin/activate
 python -m pip install -e ".[dev]"
 retrieval-log-audit examples/sample.txt
-retrieval-log-audit examples/sample.txt --json
 ```
